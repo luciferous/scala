@@ -1039,16 +1039,10 @@ object Stream extends SeqFactory[Stream] {
   /** A wrapper class that adds `#::` for cons and `#:::` for concat as operations
    *  to streams.
    */
-  class ConsWrapper[A](tl: => Stream[A]) {
+  implicit class ConsWrapper[A](tl: => Stream[A]) {
     def #::(hd: A): Stream[A] = cons(hd, tl)
     def #:::(prefix: Stream[A]): Stream[A] = prefix append tl
   }
-
-  /** A wrapper method that adds `#::` for cons and `#::: for concat as operations
-   *  to streams.
-   */
-  implicit def consWrapper[A](stream: => Stream[A]): ConsWrapper[A] =
-    new ConsWrapper[A](stream)
 
   /** An extractor that allows to pattern match streams with `#::`.
    */
